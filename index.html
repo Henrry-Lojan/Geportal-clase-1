@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.I.G. La Castellana | Loja</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+</head>
+<body>
+    <div id="sidebar" class="no-print">
+        <header>
+            <div class="logo-box">IST LA CASTELLANA</div>
+            <h1>Geoportal SIG</h1>
+            <p>Loja - Barrios Urbanos</p>
+        </header>
+
+        <div class="tool-section">
+            <label>👤 Nombre del Estudiante:</label>
+            <input type="text" id="student-name" placeholder="Escribe aquí..." oninput="updatePrintMeta()">
+        </div>
+
+        <div class="tool-section">
+            <label for="province-select">1. Selección de Parroquia:</label>
+            <select id="province-select">
+                <option value="">Cargando...</option>
+            </select>
+        </div>
+
+        <div class="tool-section">
+            <label>2. Geoprocesamiento:</label>
+            <button id="btn-clip" class="btn-tool">Fusionar Polígonos</button>
+            <p class="hint" id="status-text">Estado: Listo</p>
+        </div>
+
+        <div class="tool-section">
+            <label>3. Producto Final:</label>
+            <button id="btn-print" class="btn-primary">Finalizar y Generar PDF</button>
+        </div>
+
+        <footer>
+            Loja, Ecuador | 2024
+        </footer>
+    </div>
+
+    <div id="map-container">
+        <!-- CAJETÍN DE INGENIERÍA (Solo para el PDF) -->
+        <div id="print-header" class="only-print">
+            <div class="header-left">
+                <strong>INSTITUTO SUPERIOR TECNOLÓGICO</strong><br>
+                <span>LA CASTELLANA</span>
+            </div>
+            <div class="header-center">
+                <h2 id="map-title">ANÁLISIS DE TERRITORIO URBANO</h2>
+                <span class="subtitle">Geografía y Ordenamiento Territorial</span>
+            </div>
+            <div class="header-right">
+                <div><strong>ALUMNO:</strong> <span id="print-st-name">__________</span></div>
+                <div><strong>FECHA:</strong> <span id="print-date">--/--/--</span></div>
+            </div>
+        </div>
+
+        <div id="map"></div>
+
+        <div id="north-arrow" class="map-overlay">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Compass_rose_brown_N.png" alt="N">
+            <div class="north-label">N</div>
+        </div>
+        
+        <div id="map-legend" class="map-overlay only-print">
+            <h3>Leyenda</h3>
+            <div class="legend-item"><span class="box-parroquia"></span> Polígono Parroquial</div>
+            <div class="legend-item"><span class="box-barrio"></span> Límites Barriales</div>
+            <div class="legend-item"><span class="box-grid"></span> Grilla de Referencia</div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

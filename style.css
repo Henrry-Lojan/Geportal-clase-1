@@ -1,0 +1,95 @@
+:root {
+    --primary: #2c3e50;
+    --accent: #e67e22;
+    --sidebar-width: 320px;
+}
+
+body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Outfit', sans-serif;
+    background: #f8fafc;
+}
+
+/* SIDEBAR EXTERNO */
+#sidebar {
+    width: var(--sidebar-width); height: 100vh;
+    background: #ffffff; padding: 30px;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.05);
+    z-index: 2000; position: absolute;
+    left: 0; top: 0;
+}
+
+#map-container {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    height: 100vh; position: relative;
+}
+
+#map { width: 100%; height: 100%; }
+
+/* ESTILOS DE ELEMENTOS */
+.logo-box { background: var(--primary); color: white; padding: 6px 15px; font-weight: bold; border-radius: 4px; margin-bottom: 20px; display: inline-block; }
+input, select, .btn-tool, .btn-primary { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 15px; font-family: inherit; }
+.btn-primary { background: var(--primary); color: white; font-weight: bold; cursor: pointer; border: none; }
+
+/* OVERLAYS */
+.map-overlay { position: absolute; z-index: 1000; pointer-events: none; }
+#north-arrow { top: 20px; right: 20px; text-align: center; }
+#north-arrow img { width: 50px; }
+
+#map-legend { 
+    bottom: 30px; right: 30px; 
+    background: white; padding: 15px; 
+    border: 2px solid #2c3e50; border-radius: 6px;
+    display: flex; flex-direction: column; /* VERTICAL */
+    gap: 8px;
+}
+
+.legend-item { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.box-parroquia { width: 15px; height: 15px; background: rgba(230,126,34,0.3); border: 2px dashed #e67e22; }
+.box-barrio { width: 15px; height: 15px; background: rgba(52,152,219,0.1); border: 1.5px solid #2980b9; }
+.box-grid { width: 15px; height: 15px; background: #eee; border: 1px dotted #999; }
+
+/* REGLAS DE IMPRESIÓN (EL CORAZÓN DEL PDF) */
+@media print {
+    @page { size: A4 landscape; margin: 0; }
+    
+    html, body { height: 100vh; overflow: hidden !important; }
+    .no-print { display: none !important; }
+    .only-print { display: flex !important; }
+
+    /* EL MAPA ES EL REY: CENTRADO TOTAL */
+    #map-container {
+        margin: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        position: fixed !important;
+        top: 0; left: 0;
+        background: white !important;
+        border: 15mm solid white; /* Margen de seguridad */
+        box-sizing: border-box;
+        z-index: 999;
+    }
+
+    #map {
+        height: 100% !important;
+        width: 100% !important;
+        border: 2px solid black !important;
+    }
+
+    #print-header {
+        position: absolute; top: 0; left: 0; width: 100%;
+        background: white !important; border-bottom: 2px solid #2c3e50;
+        padding: 15px 40px; box-sizing: border-box; z-index: 1001;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+
+    #north-arrow { top: 120px !important; right: 50px !important; }
+
+    #map-legend {
+        bottom: 50px !important; right: 50px !important;
+        flex-direction: column !important; /* FORZAR VERTICAL */
+        border: 2px solid black !important;
+        box-shadow: none !important;
+    }
+}
