@@ -17,7 +17,7 @@ function setupMobileMenu() {
     if (btn) {
         btn.onclick = () => {
             sidebar.classList.toggle('active');
-            btn.innerText = sidebar.classList.contains('active') ? "✕ Cerrar Panel" : "☰ Panel de Herramientas";
+            btn.innerText = sidebar.classList.contains('active') ? "✕ Cerrar" : "🛠️ Herramientas";
         };
     }
 }

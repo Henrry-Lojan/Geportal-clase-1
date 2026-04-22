@@ -4,140 +4,91 @@
     --sidebar-width: 320px;
 }
 
+* { box-sizing: border-box; }
+
 body, html {
     margin: 0; padding: 0; height: 100%;
     font-family: 'Outfit', sans-serif;
     background: #f8fafc;
+    overflow: hidden; /* Evita scrolls raros en móvil */
 }
 
-/* SIDEBAR EXTERNO */
+/* SIDEBAR ESCRITORIO */
 #sidebar {
     width: var(--sidebar-width); height: 100vh;
     background: #ffffff; padding: 30px;
     box-shadow: 10px 0 30px rgba(0,0,0,0.05);
     z-index: 2000; position: absolute;
     left: 0; top: 0;
+    overflow-y: auto;
 }
 
 #map-container {
     margin-left: var(--sidebar-width);
     width: calc(100% - var(--sidebar-width));
     height: 100vh; position: relative;
+    background: #fff;
 }
 
 #map { width: 100%; height: 100%; }
 
 /* ESTILOS DE ELEMENTOS */
-.logo-box { background: var(--primary); color: white; padding: 6px 15px; font-weight: bold; border-radius: 4px; margin-bottom: 20px; display: inline-block; }
-input, select, .btn-tool, .btn-primary { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 15px; font-family: inherit; }
+.logo-box { background: var(--primary); color: white; padding: 6px 15px; font-weight: bold; border-radius: 4px; margin-bottom: 20px; display: inline-block; font-size: 11px; }
+h1 { font-size: 24px; margin: 0; }
+.tool-section { margin-bottom: 20px; }
+label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; }
+input, select, .btn-tool, .btn-primary { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-family: inherit; font-size: 14px; }
 .btn-primary { background: var(--primary); color: white; font-weight: bold; cursor: pointer; border: none; }
 
 /* OVERLAYS */
-.map-overlay { position: absolute; z-index: 1000; pointer-events: none; }
-#north-arrow { top: 20px; right: 20px; text-align: center; }
-#north-arrow img { width: 50px; }
+#north-arrow { top: 20px; right: 20px; position: absolute; z-index: 1000; text-align: center; }
+#north-arrow img { width: 45px; }
+#map-legend { bottom: 40px; right: 20px; position: absolute; z-index: 1000; background: white; padding: 12px; border: 2px solid #2c3e50; border-radius: 6px; display: flex; flex-direction: column; gap: 5px; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+.box-parroquia { width: 12px; height: 12px; border: 2px dashed #e67e22; background: rgba(230,126,34,0.3); }
+.box-barrio { width: 12px; height: 12px; border: 1px solid #2980b9; background: rgba(52,152,219,0.1); }
 
-#map-legend { 
-    bottom: 30px; right: 30px; 
-    background: white; padding: 15px; 
-    border: 2px solid #2c3e50; border-radius: 6px;
-    display: flex; flex-direction: column; /* VERTICAL */
-    gap: 8px;
-}
-
-.legend-item { display: flex; align-items: center; gap: 10px; font-size: 13px; }
-.box-parroquia { width: 15px; height: 15px; background: rgba(230,126,34,0.3); border: 2px dashed #e67e22; }
-.box-barrio { width: 15px; height: 15px; background: rgba(52,152,219,0.1); border: 1.5px solid #2980b9; }
-.box-grid { width: 15px; height: 15px; background: #eee; border: 1px dotted #999; }
-
-/* BOTÓN MÓVIL (Oculto por defecto en PC) */
+/* --- DISEÑO PARA CELULARES (MOBILE FIRST) --- */
 #mobile-menu-btn {
-    display: none;
-    position: fixed;
-    top: 15px; left: 15px;
-    z-index: 3000;
-    padding: 12px 20px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    cursor: pointer;
+    display: none; position: fixed; bottom: 25px; right: 20px;
+    z-index: 3000; padding: 15px 25px; background: var(--primary);
+    color: white; border: none; border-radius: 50px; font-weight: 700;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3); cursor: pointer;
 }
 
-/* RESPONSIVO (TABLETS Y CELULARES) */
 @media (max-width: 768px) {
     #mobile-menu-btn { display: block; }
 
     #sidebar {
-        width: 100%;
-        height: auto;
-        max-height: 80vh;
-        bottom: 0;
-        top: auto;
-        left: 0;
-        border-radius: 25px 25px 0 0;
-        transform: translateY(100%); /* Oculto inicialmente por abajo */
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow-y: auto;
-        box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+        width: 100%; height: auto; max-height: 70vh;
+        bottom: 0; top: auto; left: 0;
+        border-radius: 30px 30px 0 0;
+        transform: translateY(110%);
+        transition: transform 0.4s ease-out;
+        padding: 25px;
+        box-shadow: 0 -15px 40px rgba(0,0,0,0.15);
     }
 
-    /* Clase para abrir el menú en el celular */
-    #sidebar.active {
-        transform: translateY(0);
-    }
+    #sidebar.active { transform: translateY(0); }
 
-    #map-container {
-        margin-left: 0;
-        width: 100%;
-    }
+    /* Simplificamos cabecera en móvil */
+    #sidebar header p, #sidebar footer { display: none; }
+    #sidebar h1 { font-size: 18px; margin-bottom: 20px; }
 
-    h1 { font-size: 20px; }
-    .tool-section { margin-bottom: 15px; }
+    #map-container { margin-left: 0; width: 100%; height: 100vh; }
+    
+    /* Movemos controles de Leaflet en móvil para no tapar */
+    .leaflet-bottom.leaflet-left { bottom: 80px !important; }
+    #map-legend { display: none; } /* Ocultar leyenda en móvil para limpiar pantalla */
 }
 
 /* REGLAS DE IMPRESIÓN */
 @media print {
     @page { size: A4 landscape; margin: 0; }
-    
     html, body { height: 100vh; overflow: hidden !important; }
     .no-print { display: none !important; }
     .only-print { display: flex !important; }
-
-    /* EL MAPA ES EL REY: CENTRADO TOTAL */
-    #map-container {
-        margin: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        position: fixed !important;
-        top: 0; left: 0;
-        background: white !important;
-        border: 15mm solid white; /* Margen de seguridad */
-        box-sizing: border-box;
-        z-index: 999;
-    }
-
-    #map {
-        height: 100% !important;
-        width: 100% !important;
-        border: 2px solid black !important;
-    }
-
-    #print-header {
-        position: absolute; top: 0; left: 0; width: 100%;
-        background: white !important; border-bottom: 2px solid #2c3e50;
-        padding: 15px 40px; box-sizing: border-box; z-index: 1001;
-        display: flex; justify-content: space-between; align-items: center;
-    }
-
-    #north-arrow { top: 120px !important; right: 50px !important; }
-
-    #map-legend {
-        bottom: 50px !important; right: 50px !important;
-        flex-direction: column !important; /* FORZAR VERTICAL */
-        border: 2px solid black !important;
-        box-shadow: none !important;
-    }
+    #map-container { margin: 0 !important; width: 100vw !important; height: 100vh !important; position: fixed !important; top: 0; left: 0; border: 15mm solid white; box-sizing: border-box; }
+    #map { height: 100% !important; width: 100% !important; border: 2px solid black !important; }
+    #print-header { position: absolute; top: 0; left: 0; width: 100%; background: white !important; border-bottom: 2px solid #2c3e50; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
 }
