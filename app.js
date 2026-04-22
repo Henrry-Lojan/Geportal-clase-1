@@ -8,7 +8,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadLocalData();
     setupFilters();
     initMeta();
+    setupMobileMenu();
 });
+
+function setupMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const sidebar = document.getElementById('sidebar');
+    if (btn) {
+        btn.onclick = () => {
+            sidebar.classList.toggle('active');
+            btn.innerText = sidebar.classList.contains('active') ? "✕ Cerrar Panel" : "☰ Panel de Herramientas";
+        };
+    }
+}
 
 function initMap() {
     map = L.map('map', {

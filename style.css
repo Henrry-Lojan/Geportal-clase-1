@@ -50,7 +50,55 @@ input, select, .btn-tool, .btn-primary { width: 100%; padding: 12px; border-radi
 .box-barrio { width: 15px; height: 15px; background: rgba(52,152,219,0.1); border: 1.5px solid #2980b9; }
 .box-grid { width: 15px; height: 15px; background: #eee; border: 1px dotted #999; }
 
-/* REGLAS DE IMPRESIÓN (EL CORAZÓN DEL PDF) */
+/* BOTÓN MÓVIL (Oculto por defecto en PC) */
+#mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 15px; left: 15px;
+    z-index: 3000;
+    padding: 12px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+/* RESPONSIVO (TABLETS Y CELULARES) */
+@media (max-width: 768px) {
+    #mobile-menu-btn { display: block; }
+
+    #sidebar {
+        width: 100%;
+        height: auto;
+        max-height: 80vh;
+        bottom: 0;
+        top: auto;
+        left: 0;
+        border-radius: 25px 25px 0 0;
+        transform: translateY(100%); /* Oculto inicialmente por abajo */
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+    }
+
+    /* Clase para abrir el menú en el celular */
+    #sidebar.active {
+        transform: translateY(0);
+    }
+
+    #map-container {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    h1 { font-size: 20px; }
+    .tool-section { margin-bottom: 15px; }
+}
+
+/* REGLAS DE IMPRESIÓN */
 @media print {
     @page { size: A4 landscape; margin: 0; }
     
